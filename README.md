@@ -11,7 +11,6 @@ Follow these steps to get Unbound up and running with Docker Compose:
 - **Docker**: Ensure you have [Docker](https://www.docker.com/products/docker-desktop) installed.
 - **Docker Compose**: Ensure you have [Docker Compose](https://docs.docker.com/compose/) installed.
 
-
 ### Steps to Run
 
 1. **Clone the repository** (if you haven't already):
@@ -36,16 +35,6 @@ Follow these steps to get Unbound up and running with Docker Compose:
    docker ps
    </pre>
 
-### 🛠️ Configuration
-
-The default configuration for Unbound is provided inside the Docker image. The following default settings are applied:
-
-- **DNS Resolution**: The server will resolve DNS queries and provide the results back to the clients.
-- **Interface Binding**: The Unbound DNS service listens on all interfaces (`0.0.0.0`).
-- **Access Control**: Allows specific private IP ranges, such as `192.168.0.0/16`, `10.0.0.0/16`, etc.
-
-If you want to customize the configuration, you can edit the `unbound.conf` file in the container (it is already pre-configured in the image).
-
 ### 🔧 Troubleshooting
 
 If you experience issues or need to troubleshoot:
@@ -62,6 +51,27 @@ If you experience issues or need to troubleshoot:
    docker-compose ps
    </pre>
 
-### ⚙️ Configuration Customization
+### 🧑‍💻 Example `docker-compose.yml`
 
-You can customize the **Unbound** settings by
+Here is the **`docker-compose.yml`** file used to run Unbound:
+
+<pre>
+services:
+  nsr:
+    image: docker.io/ztaguassi/unbound:latest-arm64
+    restart: unless-stopped
+    deploy:
+      replicas: 2  # Deploy two instances of the Unbound service
+    dns:
+      - 127.0.0.1
+    networks:
+      - macvlan
+
+networks:
+  macvlan:
+    external: true
+</pre>
+
+### 📜 License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
