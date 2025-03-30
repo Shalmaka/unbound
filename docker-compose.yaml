@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  nsr:
+    image: docker.io/ztaguassi/unbound:latest-arm64
+    restart: unless-stopped
+    deploy:
+      replicas: 2  # Deploy two instances of the Unbound service
+    dns:
+      - 127.0.0.1  # If you want the container to use itself for DNS resolution
+    networks:
+      - macvlan
+
+networks:
+  macvlan:
+    external: true
