@@ -2,7 +2,9 @@ FROM alpine:3.15
 
 # Create 'unbound' user and install required packages
 RUN adduser -D unbound && \
-    apk add --no-cache unbound openssl bind-tools && \
+    apk add --no-cache unbound=1.13.2-r2  \
+    openssl \
+    bind-tools && \
     rm -f /etc/unbound/unbound.conf && \
     rm -f /etc/unbound/root.key && \
     mkdir -p /etc/unbound /usr/local/bin && \
